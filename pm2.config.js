@@ -5,7 +5,7 @@ module.exports = {
       ignore_watch: ["node_modules", "storage"],
       interpreter: "node",
       interpreter_args:
-        "--require ts-node/register --require dotenv-defaults/config dotenv_config_silent=true",
+        "--require ts-node/register --require dotenv-defaults/config",
       script: "src/bot.ts",
     },
   ],
