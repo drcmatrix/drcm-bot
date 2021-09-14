@@ -8,7 +8,7 @@
   "scripts": {
     "auth": "ts-node src/auth.ts",
     "lint": "eslint",
-    "prepare": "husky install",
+    "postinstall": "husky install",
     "start": "pm2-runtime start pm2.config.js",
     "start:dev": "pm2-dev start pm2.config.js"
   },
