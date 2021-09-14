@@ -1,0 +1,6 @@
+.idea/
+config/*
+!config/default.ts
+dist/
+node_modules/
+storage/
