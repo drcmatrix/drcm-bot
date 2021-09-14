@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "src/bot.ts",
   "scripts": {
-    "auth": "ts-node src/auth.ts",
+    "auth": "ts-node --require dotenv-defaults/config src/auth.ts",
     "heroku-postbuild": "npm install pm2",
     "lint": "eslint",
     "prepare": "husky install",
@@ -24,7 +24,7 @@
   "dependencies": {
     "better-sqlite3": "^7.4.3",
     "commander": "^8.2.0",
-    "config": "^3.3.6",
+    "dotenv-defaults": "^2.0.2",
     "html-es6cape": "^2.0.0",
     "matrix-bot-sdk": "^0.5.19",
     "pm2": "^5.1.1",

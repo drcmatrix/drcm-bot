@@ -1,6 +1,10 @@
 #!/usr/bin/env node
-import config from "./config";
-import { LogService, MatrixAuth, RichConsoleLogger } from "matrix-bot-sdk";
+import {
+  LogLevel,
+  LogService,
+  MatrixAuth,
+  RichConsoleLogger,
+} from "matrix-bot-sdk";
 import { program } from "commander";
 import os from "os";
 
@@ -22,11 +26,11 @@ const options = <
 >program.opts();
 
 LogService.setLogger(new RichConsoleLogger());
-LogService.setLevel(config.logLevel);
+LogService.setLevel(LogLevel[process.env.BOT_LOG_LEVEL]);
 LogService.info("auth", "Making new session...");
 
 (async function () {
-  const auth = new MatrixAuth(config.homeserverUrl);
+  const auth = new MatrixAuth(process.env.MATRIX_HOMESERVER_URL);
   const client = await auth.passwordLogin(
     options.username,
     options.password,

@@ -1,5 +1,5 @@
-import config from "./config";
 import {
+  LogLevel,
   LogService,
   MatrixClient,
   MessageEvent,
@@ -11,27 +11,29 @@ import {
 import escapeHtml from "html-es6cape";
 
 LogService.setLogger(new RichConsoleLogger());
-LogService.setLevel(config.logLevel);
+LogService.setLevel(LogLevel[process.env.BOT_LOG_LEVEL]);
 LogService.info("bot", `Starting the bot client...`);
 
 (async function () {
-  const storage =
-    config.simpleStoragePath !== undefined
-      ? new SimpleFsStorageProvider(config.simpleStoragePath)
-      : undefined;
+  const storage = process.env.BOT_STORAGE_PATH
+    ? new SimpleFsStorageProvider(process.env.BOT_STORAGE_PATH)
+    : undefined;
 
   let client: MatrixClient;
-  if (config.pantalaimon) {
+  if (process.env.PANTALAIMON_USERNAME) {
     // Pantalaimon daemon is supposed to handle E2E encryption pecularities without reinventing crypto storage
-    const pantalaimon = new PantalaimonClient(config.homeserverUrl, storage);
+    const pantalaimon = new PantalaimonClient(
+      process.env.MATRIX_HOMESERVER_URL,
+      storage
+    );
     client = await pantalaimon.createClientWithCredentials(
-      config.pantalaimon.username,
-      config.pantalaimon.password
+      process.env.PANTALAIMON_USERNAME,
+      process.env.PANTALAIMON_PASSWORD
     );
   } else {
     client = new MatrixClient(
-      config.homeserverUrl,
-      config.accessToken,
+      process.env.MATRIX_HOMESERVER_URL,
+      process.env.MATRIX_ACCESS_TOKEN,
       storage
     );
   }
