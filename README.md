@@ -34,25 +34,14 @@ Save this access token for the next step. Make sure it isn't leaked.
 
 ### Adding Configuration
 
-We will need a local configuration file to add the required values to let our bot work. Create a file `config/local.ts` with following contents:
-```typescript
-import { Config } from "../src/config";
-import { LogLevel } from "matrix-bot-sdk";
-
-const config: Config = {
-  logLevel: LogLevel.DEBUG,
-  simpleStoragePath: "storage/bot.json",
-  accessToken: "********************************************",
-};
-
-export default config;
+We will need one environment variable overriden to make bot functional. For that, create `.env` file with this line:
+```
+MATRIX_ACCESS_TOKEN=********************************************
 ```
 
-Here comes our `accessToken`. We also specify storage paths to save the state of bot between the runs.
+By default, persistent bot data is written into `storage/bot.json`. It is where we keep common state of the bot between reloads. State may consist of information about Regular and Head Members, as well as miscellaneous events.
 
-It's a basic one: `simpleStoragePath` leads to the file, where common state of the bot is persisted. State may consist of data about Regular and Head Members, as well as miscellaneous events.
-
-Encryption is supported by introducing [pantalaimon](https://github.com/matrix-org/pantalaimon), the most straightforward reverse proxy without burden to reinvent a crypto storage. Configure credentials accordingly in `pantalaimon` if required. Otherwise, inability to decrypt messages becomes a big limitation: no way to handle direct messages and messages in other E2EE rooms.
+Encryption is supported by introducing [Pantalaimon](https://github.com/matrix-org/pantalaimon), the most straightforward reverse proxy without burden to reinvent a crypto storage. Configure credentials accordingly with `PANTALAIMON_USERNAME` and `PANTALAIMON_PASSWORD` environment variables. Otherwise, inability to decrypt messages becomes a big limitation: there is no way to handle direct messages and messages in other E2EE rooms.
 
 ### Starting Bot
 
@@ -68,9 +57,7 @@ There is a generic script for running bot on production environment:
 $ npm start
 ```
 
-Unlike the development script, it has no live reload, because this should be handled separately with CI/CD pipeline.
-
-You can directly deploy this repository on Heroku, by the way.
+Unlike the development script, it has no live reload, because this should be handled separately with CI/CD pipeline. We've made it via Heroku, you can try something else.
 
 ## Planned Features
 
